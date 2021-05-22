@@ -38,3 +38,8 @@ sysinfo.txt
 *.unitypackage
 
 Logs/shadercompiler-UnityShaderCompiler.exe0.log
+
+
+#lyniat / Laurin
+*.DS_Store
+*/AmplifyShaderEditor
