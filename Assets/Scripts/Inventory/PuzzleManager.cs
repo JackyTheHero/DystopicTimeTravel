@@ -33,8 +33,9 @@ public class PuzzleManager : MonoBehaviour
             {
                 solvedSlots[snippet.index] = true;
                 if (puzzleSolved = CheckPuzzle())
-                    PuzzleSolved?.Invoke();
+                 PuzzleSolved?.Invoke();
                 snippet.transform.position = currentSlot.transform.position;
+                Debug.Log("hey");
                 GameObject.Find("InvCounter").GetComponent<InventoryCounter>().CountDown();
                 return true;
             }

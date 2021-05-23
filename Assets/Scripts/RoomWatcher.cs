@@ -63,9 +63,11 @@ public class RoomWatcher : MonoBehaviour
 
     void Update()
     {
+        /*
         if(GameObject.Find("PuzzleBackground1").GetComponent<PuzzleManager>().GetPuzzleSolved() && GameObject.Find("PuzzleBackground2").GetComponent<PuzzleManager>().GetPuzzleSolved() && GameObject.Find("PuzzleBackground3").GetComponent<PuzzleManager>().GetPuzzleSolved())
         {
             GameObject.Find("WinScreen").GetComponent<Canvas>().enabled = true;
         }
+        */
     }
 }
