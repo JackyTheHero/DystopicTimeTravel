@@ -5,11 +5,12 @@ using UnityEngine;
 public class PropCollision : MonoBehaviour
 {
     private bool activateable;
+    public GameObject textBox;
     private GameObject eee;
+    public string textString = "UwU";
 
     void Start()
     {
-        eee = new GameObject();
         activateable = false;
     }
 
@@ -17,7 +18,8 @@ public class PropCollision : MonoBehaviour
     {
         if (col.gameObject.tag == "PlayerView")
         {
-             eee = Instantiate(GameObject.Find("EEE"),this.transform);
+            eee = Instantiate(textBox ? textBox : GameObject.Find("TextBox"), this.transform);
+            eee.GetComponent<ShowTextBox>().setText(textString);
             activateable = true;
             eee.transform.localScale = new Vector3(1,1,1);
             eee.transform.position = this.transform.position + new Vector3(0,5,0);
