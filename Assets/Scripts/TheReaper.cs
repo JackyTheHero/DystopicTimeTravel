@@ -16,6 +16,7 @@ public class TheReaper : MonoBehaviour
     public void DiePlayerDie()
     {
         Leiche = Instantiate(GameObject.Find("PrefabLeiche"), GameObject.Find("Leichenhalle").transform);
+        Leiche.GetComponent<PropCollision>().textString = "UwU";
         PositionTheLeiche();
         transform.position = GameObject.FindGameObjectWithTag("StartSpawn").transform.position;
     }
