@@ -7,19 +7,12 @@ public class PropCollision : MonoBehaviour
     private bool activateable;
     public GameObject textBox;
     private GameObject eee;
-<<<<<<< Updated upstream
     public string textString = "UwU";
-
-    void Start()
-    {
-=======
     private bool wasActivated;
 
     void Start()
     {
         wasActivated = false;
-        eee = new GameObject();
->>>>>>> Stashed changes
         activateable = false;
     }
 
