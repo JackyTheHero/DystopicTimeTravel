@@ -26,7 +26,8 @@ public class Snippet : MonoBehaviour, IDraggable
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        solved = PuzzleManager.SnippetDrop(this);
+        Debug.Log($"my parent's parent is: {this.transform.parent.parent.GetComponent<PuzzleManager>()}");
+        solved = this.transform.parent.parent.GetComponent<PuzzleManager>().SnippetDrop(this);
         if (!solved)
             image.raycastTarget = true;
     }

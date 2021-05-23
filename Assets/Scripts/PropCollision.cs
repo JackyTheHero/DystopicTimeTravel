@@ -72,13 +72,56 @@ public class PropCollision : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 if (activateable && !eIn && this.tag == "PuzzleTree") {
+                    Debug.Log("Hello Tree!");
                     eee.SetActive(false);
                     eIn = true;
 
-                    Debug.Log(GameObject.Find("canvasEmpty"));
-
                     GameObject.Find("Player").GetComponent<PlayerMovement>().enabled = false;
+
+                    if(this.name == "baum Auﬂenbereich")
+                    {
+                        GameObject.Find("PuzzleCanvas").GetComponent<Canvas>().enabled = true;
+                    }
+
+                    if (this.name == "baum Labor")
+                    {
+                        GameObject.Find("PuzzleCanvas2").GetComponent<Canvas>().enabled = true;
+                    }
+
+                    if (this.name == "Yggdrasil")
+                    {
+                        GameObject.Find("PuzzleCanvas3").GetComponent<Canvas>().enabled = true;
+                    }
+
                 }
+                else if (eIn && this.tag == "PuzzleTree")
+                {
+                    eeeIn.SetActive(false);
+
+                    activateable = true;
+
+                    eee.SetActive(true);
+
+                    eIn = false;
+
+                    GameObject.Find("Player").GetComponent<PlayerMovement>().enabled = true;
+
+                    if (this.name == "baum Auﬂenbereich")
+                    {
+                        GameObject.Find("PuzzleCanvas").GetComponent<Canvas>().enabled = false;
+                    }
+
+                    if (this.name == "baum Labor")
+                    {
+                        GameObject.Find("PuzzleCanvas2").GetComponent<Canvas>().enabled = false;
+                    }
+
+                    if (this.name == "Yggdrasil")
+                    {
+                        GameObject.Find("PuzzleCanvas3").GetComponent<Canvas>().enabled = false;
+                    }
+                }
+
 
                 if (activateable && !eIn && this.tag == "Leiche")
                 {
@@ -114,21 +157,6 @@ public class PropCollision : MonoBehaviour
 
                     eIn = false; 
                 }
-
-                else if (eIn && this.tag == "PuzzleTree")
-                {
-                    eeeIn.SetActive(false);
-
-                    activateable = true;
-
-                    eee.SetActive(true);
-
-                    eIn = false;
-
-                    GameObject.Find("Player").GetComponent<PlayerMovement>().enabled = true;
-                }
-
-                
             }
         }
     }

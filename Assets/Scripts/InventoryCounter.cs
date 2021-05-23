@@ -18,6 +18,12 @@ public class InventoryCounter : MonoBehaviour
         this.GetComponent<Text>().text = counter.ToString();
     }
 
+    public void CountDown()
+    {
+        --counter;
+        this.GetComponent<Text>().text = counter.ToString();
+    }
+
     public int GetCount()
     {
         return counter;

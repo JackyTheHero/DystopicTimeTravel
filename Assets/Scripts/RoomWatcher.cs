@@ -15,7 +15,7 @@ public class RoomWatcher : MonoBehaviour
         nearProps = new List<GameObject>();
         textCounter = 0;
 
-        GameObject.Find("canvasEmpty").SetActive(false);
+        GameObject.Find("PuzzleCanvas").GetComponent<Canvas>().enabled = false;
     }
 
     // Update is called once per frame
@@ -59,5 +59,13 @@ public class RoomWatcher : MonoBehaviour
             }
         }
         return true;
+    }
+
+    void Update()
+    {
+        if(GameObject.Find("PuzzleBackground1").GetComponent<PuzzleManager>().GetPuzzleSolved() && GameObject.Find("PuzzleBackground2").GetComponent<PuzzleManager>().GetPuzzleSolved() && GameObject.Find("PuzzleBackground3").GetComponent<PuzzleManager>().GetPuzzleSolved())
+        {
+            GameObject.Find("WinScreen").GetComponent<Canvas>().enabled = true;
+        }
     }
 }

@@ -3,12 +3,17 @@ using UnityEngine;
 
 public class PuzzleManager : MonoBehaviour
 {
-    public static Action PuzzleSolved;
-    public static bool puzzleSolved;
+    public   Action PuzzleSolved;
+    public   bool puzzleSolved;
 
-    private static bool[] solvedSlots = new bool[3];
+    private   bool[] solvedSlots = new bool[3];
 
-    public static TargetSlot currentSlot;
+    public   TargetSlot currentSlot;
+
+    public bool GetPuzzleSolved()
+    {
+        return puzzleSolved;
+    }
 
     private void OnEnable()
     {
@@ -21,7 +26,7 @@ public class PuzzleManager : MonoBehaviour
             snippets[i].index = i;
     }
 
-    public static bool SnippetDrop(Snippet snippet)
+    public   bool SnippetDrop(Snippet snippet)
     {
         if (currentSlot)
             if (snippet.index == currentSlot.index)
@@ -30,18 +35,20 @@ public class PuzzleManager : MonoBehaviour
                 if (puzzleSolved = CheckPuzzle())
                     PuzzleSolved?.Invoke();
                 snippet.transform.position = currentSlot.transform.position;
+                GameObject.Find("InvCounter").GetComponent<InventoryCounter>().CountDown();
                 return true;
             }
         return false;
     }
 
-    private static bool CheckPuzzle()
+    private   bool CheckPuzzle()
     {
         for (int i = 0; i < solvedSlots.Length; i++)
         {
             if (solvedSlots[i] == false)
                 return false;
         }
+
         return true;
     }
 }
