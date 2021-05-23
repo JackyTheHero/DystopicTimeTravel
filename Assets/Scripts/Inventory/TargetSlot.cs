@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 public class TargetSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public int index = -1;
+    [HideInInspector] public int index = -1;
 
     public void OnPointerEnter(PointerEventData eventData)
     {

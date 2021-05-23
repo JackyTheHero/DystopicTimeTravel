@@ -3,9 +3,9 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Image))]
-public class Draggable : MonoBehaviour, IDraggable
+public class Snippet : MonoBehaviour, IDraggable
 {
-    public int index = -1;
+    [HideInInspector] public int index = -1;
     private Image image;
     private bool solved = false;
 
