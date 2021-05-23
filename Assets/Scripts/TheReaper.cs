@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class TheReaper : MonoBehaviour
 {
-    private static List<GameObject> Leichenplatz;
+    private List<GameObject> Leichenplatz;
     GameObject Leiche;
 
     void Start()
     {
+        Leichenplatz = new List<GameObject>();
         SetLeichenSpawnPoints();
     }
 
     public void DiePlayerDie()
     {
-        Leiche = Instantiate(this.gameObject,GameObject.Find("Leichenhalle").transform);
+        Leiche = Instantiate(GameObject.Find("PrefabLeiche"), GameObject.Find("Leichenhalle").transform);
         PositionTheLeiche();
         transform.position = GameObject.FindGameObjectWithTag("StartSpawn").transform.position;
     }
@@ -33,9 +34,9 @@ public class TheReaper : MonoBehaviour
 
     private void PositionTheLeiche()
     {
-        int rnd = (int)Random.value*Leichenplatz.Count;
+        int rnd = (int)Random.Range(0,Leichenplatz.Count);
         Leiche.transform.position = Leichenplatz[rnd].transform.position;
         Leiche.transform.rotation = Leichenplatz[rnd].transform.rotation;
-        Leichenplatz.RemoveAt(rnd);
+        Leichenplatz.RemoveAt(0);
     }
 }

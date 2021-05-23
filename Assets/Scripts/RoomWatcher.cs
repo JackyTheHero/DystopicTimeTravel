@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RoomWatcher : MonoBehaviour
 {
-    public static int roomNumber;
+    public int roomNumber;
 
     // Start is called before the first frame update
     void Start()
