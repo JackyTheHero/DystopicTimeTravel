@@ -6,17 +6,20 @@ public class TheReaper : MonoBehaviour
 {
     private List<GameObject> Leichenplatz;
     GameObject Leiche;
+    public List<string> text;
+    private int counter;
 
     void Start()
     {
         Leichenplatz = new List<GameObject>();
         SetLeichenSpawnPoints();
+        counter = 0;
     }
 
     public void DiePlayerDie()
     {
         Leiche = Instantiate(GameObject.Find("PrefabLeiche"), GameObject.Find("Leichenhalle").transform);
-        Leiche.GetComponent<PropCollision>().textString = "UwU";
+
         PositionTheLeiche();
         transform.position = GameObject.FindGameObjectWithTag("StartSpawn").transform.position;
     }

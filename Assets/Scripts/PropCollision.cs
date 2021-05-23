@@ -7,50 +7,143 @@ public class PropCollision : MonoBehaviour
     private bool activateable;
     public GameObject textBox;
     private GameObject eee;
+    private GameObject eeeIn;
     public string textString = "UwU";
-    private bool wasActivated;
+    private bool wasActivatedOnce;
+    private bool eIn;
+    private bool isNearest;
 
     void Start()
     {
-        wasActivated = false;
+        wasActivatedOnce = false;
+        eIn = false;
         activateable = false;
+        isNearest = false;
+
+        eee = Instantiate(GameObject.Find("EEE"), this.transform);
+        eee.transform.localScale = new Vector3(1, 1, 1);
+        eee.transform.position = this.transform.position + new Vector3(0, 5, 0);
+        eee.SetActive(false);
+
+        eeeIn = Instantiate(textBox ? textBox : GameObject.Find("TextBox"), this.transform);
+        eeeIn.GetComponent<ShowTextBox>().setText(textString);
+        eeeIn.transform.localScale = new Vector3(1, 1, 1);
+        eeeIn.transform.position = this.transform.position + new Vector3(0, 5, 0);
+        eeeIn.SetActive(false);
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.tag == "PlayerView")
         {
-            eee = Instantiate(textBox ? textBox : GameObject.Find("TextBox"), this.transform);
-            eee.GetComponent<ShowTextBox>().setText(textString);
-            activateable = true;
-            eee.transform.localScale = new Vector3(1,1,1);
-            eee.transform.position = this.transform.position + new Vector3(0,5,0);
-            Debug.Log($"---{this.name}--- was hit by ---{col.gameObject.name}--- !");
+            GameObject.Find("RoomWatcher").GetComponent<RoomWatcher>().AddToNearProps(this.gameObject);
+            //Debug.Log($"---{this.name}--- was hit by ---{col.gameObject.name}--- !");
+        }
+    }
+
+    void OnTriggerStay2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "PlayerView")
+        {
+            if (GameObject.Find("RoomWatcher").GetComponent<RoomWatcher>().IsNearestProp(this.gameObject))
+            {
+                isNearest = true;
+                activateable = true;
+
+                if (!eIn)
+                {
+                    eee.SetActive(true);
+                }
+            }
+            else
+            {
+                isNearest = false;
+                eee.SetActive(false);
+                eeeIn.SetActive(false);
+            }
         }
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (isNearest)
         {
-            if (activateable)
+
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                Debug.Log("e pressed");
-                if (!wasActivated)
-                {
-                    GameObject.Find("InvCounter").GetComponent<InventoryCounter>().CountUp();
-                    wasActivated = true;
+                if (activateable && !eIn && this.tag == "PuzzleTree") {
+                    eee.SetActive(false);
+                    eIn = true;
+
+                    Debug.Log(GameObject.Find("canvasEmpty"));
+
+                    GameObject.Find("Player").GetComponent<PlayerMovement>().enabled = false;
                 }
+
+                if (activateable && !eIn && this.tag == "Leiche")
+                {
+                    eee.SetActive(false);
+
+                    if (!wasActivatedOnce)
+                    {
+                        eeeIn.GetComponent<ShowTextBox>().setText(
+                                GameObject.Find("Player").GetComponent<TheReaper>().text[
+                                    GameObject.Find("RoomWatcher").GetComponent<RoomWatcher>().textCounter++]);
+                            
+                        GameObject.Find("InvCounter").GetComponent<InventoryCounter>().CountUp();
+                    }
+                    
+                    eIn = true;
+
+                    eeeIn.SetActive(true);
+
+                    
+                    if (!wasActivatedOnce)
+                    {
+                        wasActivatedOnce = true;
+                    }
+                }
+
+                else if (eIn && this.tag == "Leiche")
+                {
+                    eeeIn.SetActive(false);
+
+                    activateable = true;
+
+                    eee.SetActive(true);
+
+                    eIn = false; 
+                }
+
+                else if (eIn && this.tag == "PuzzleTree")
+                {
+                    eeeIn.SetActive(false);
+
+                    activateable = true;
+
+                    eee.SetActive(true);
+
+                    eIn = false;
+
+                    GameObject.Find("Player").GetComponent<PlayerMovement>().enabled = true;
+                }
+
+                
             }
         }
     }
 
     void OnTriggerExit2D(Collider2D col)
     {
+        GameObject.Find("RoomWatcher").GetComponent<RoomWatcher>().DeleteFromNearProps(this.gameObject);
+
         if (col.gameObject.tag == "PlayerView")
         {
             activateable = false;
-            GameObject.Destroy(eee);
+            eIn = false;
+
+            eee.SetActive(false);
+            eeeIn.SetActive(false);
         }
     }
 }
