@@ -7,10 +7,19 @@ public class PropCollision : MonoBehaviour
     private bool activateable;
     public GameObject textBox;
     private GameObject eee;
+<<<<<<< Updated upstream
     public string textString = "UwU";
 
     void Start()
     {
+=======
+    private bool wasActivated;
+
+    void Start()
+    {
+        wasActivated = false;
+        eee = new GameObject();
+>>>>>>> Stashed changes
         activateable = false;
     }
 
@@ -24,6 +33,22 @@ public class PropCollision : MonoBehaviour
             eee.transform.localScale = new Vector3(1,1,1);
             eee.transform.position = this.transform.position + new Vector3(0,5,0);
             Debug.Log($"---{this.name}--- was hit by ---{col.gameObject.name}--- !");
+        }
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (activateable)
+            {
+                Debug.Log("e pressed");
+                if (!wasActivated)
+                {
+                    GameObject.Find("InvCounter").GetComponent<InventoryCounter>().CountUp();
+                    wasActivated = true;
+                }
+            }
         }
     }
 
