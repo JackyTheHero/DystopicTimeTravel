@@ -3,16 +3,17 @@ using UnityEngine;
 
 public class PuzzleManager : MonoBehaviour
 {
-    public   Action PuzzleSolved;
-    public   bool puzzleSolved;
+    public static Action PuzzleSolved;
+    public static bool puzzleSolved;
+    public static bool[] solvedPuzzles = new bool[3];
 
-    private   bool[] solvedSlots = new bool[3];
+    private static bool[] solvedSlots = new bool[3];
 
-    public   TargetSlot currentSlot;
+    public static TargetSlot currentSlot;
 
-    public bool GetPuzzleSolved()
+    public static bool getSolvedPuzzle()
     {
-        return puzzleSolved;
+        return solvedPuzzles[2];
     }
 
     private void OnEnable()
@@ -26,29 +27,44 @@ public class PuzzleManager : MonoBehaviour
             snippets[i].index = i;
     }
 
-    public   bool SnippetDrop(Snippet snippet)
+    public static bool SnippetDrop(Snippet snippet)
     {
         if (currentSlot)
             if (snippet.index == currentSlot.index)
             {
                 solvedSlots[snippet.index] = true;
-                if (puzzleSolved = CheckPuzzle())
+                if (CheckPuzzle())
+                {
+                    if (solvedPuzzles[0] && solvedPuzzles[1])
+                    {
+                        solvedPuzzles[2] = true;
+                    }
+                    if (solvedPuzzles[0])
+                    {
+                        solvedPuzzles[1] = true;
+                    }
+                    if (!solvedPuzzles[0])
+                    {
+                        solvedPuzzles[0] = true;
+                    }
+                    solvedSlots[0] = false;
+                    solvedSlots[1] = false;
+                    solvedSlots[2] = false;
+
+
                     PuzzleSolved?.Invoke();
+                }
+                    
+                
                 snippet.transform.position = currentSlot.transform.position;
-                GameObject.Find("InvCounter").GetComponent<InventoryCounter>().CountDown();
                 return true;
             }
         return false;
     }
 
-    private   bool CheckPuzzle()
+    private static bool CheckPuzzle()
     {
-        for (int i = 0; i < solvedSlots.Length; i++)
-        {
-            if (solvedSlots[i] == false)
-                return false;
-        }
-
-        return true;
+        
+        return solvedSlots[0] && solvedSlots[1] && solvedSlots[2];
     }
 }

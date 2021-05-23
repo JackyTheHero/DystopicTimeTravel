@@ -7,11 +7,11 @@ public class TargetSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        this.transform.parent.parent.GetComponent<PuzzleManager>().currentSlot = this;
+        PuzzleManager.currentSlot = this;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        this.transform.parent.parent.GetComponent<PuzzleManager>().currentSlot = null;
+        PuzzleManager.currentSlot = null;
     }
 }
